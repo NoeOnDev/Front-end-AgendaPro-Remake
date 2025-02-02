@@ -1,32 +1,47 @@
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import multiMonthPlugin from "@fullcalendar/multimonth";
-import esLocale from "@fullcalendar/core/locales/es";
-import "./Calendar.css";
+import { Calendar as BigCalendar } from "react-big-calendar";
+import { format, parse, startOfWeek, getDay } from "date-fns";
+import { es } from "date-fns/locale";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import { dateFnsLocalizer } from "react-big-calendar";
+
+const locales = {
+  es: es,
+};
+
+const localizer = dateFnsLocalizer({
+  format,
+  parse,
+  startOfWeek,
+  getDay,
+  locales,
+});
 
 export const Calendar = () => {
   const eventos = [
     {
-      title: "Reunión de ejemplo",
-      start: "2025-02-01T10:00:00",
-      end: "2025-02-01T11:00:00",
+      title: "Reunión",
+      start: new Date(2024, 1, 15, 10, 0),
+      end: new Date(2024, 1, 15, 12, 0),
     },
   ];
 
   return (
-    <div className="calendar-wrapper">
-      <FullCalendar
-        plugins={[dayGridPlugin, multiMonthPlugin]}
-        initialView="dayGridMonth"
-        locale={esLocale}
+    <div style={{ height: "100vh" }}>
+      <BigCalendar
+        localizer={localizer}
         events={eventos}
-        height="100%"
-        aspectRatio={1.5}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,dayGridWeek,dayGridDay,multiMonthYear",
+        startAccessor="start"
+        endAccessor="end"
+        messages={{
+          next: "Siguiente",
+          previous: "Anterior",
+          today: "Hoy",
+          month: "Mes",
+          week: "Semana",
+          day: "Día",
+          agenda: "Agenda",
         }}
+        style={{ height: "calc(100% - 50px)" }}
       />
     </div>
   );

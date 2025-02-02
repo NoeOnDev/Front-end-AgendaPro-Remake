@@ -1,9 +1,0 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-.calendar-wrapper {
-    height: 100vh; /* Altura total de la ventana */
-    padding: 20px;
-    box-sizing: border-box;
-  }
