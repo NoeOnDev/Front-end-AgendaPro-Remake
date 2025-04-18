@@ -98,7 +98,7 @@ export default function Register() {
                                     fullWidth
                                     size="small"
                                     id="firstName"
-                                    label="Nombre"
+                                    label="Nombre(s)"
                                     name="firstName"
                                     autoComplete="given-name"
                                     autoFocus
