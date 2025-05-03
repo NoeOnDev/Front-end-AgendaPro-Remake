@@ -26,7 +26,7 @@ import Logout from "@mui/icons-material/Logout";
 import Settings from "@mui/icons-material/Settings";
 import PersonIcon from '@mui/icons-material/Person';
 
-const drawerWidth = 240;
+const drawerWidth = 319;
 
 const openedMixin = (theme: Theme): CSSObject => ({
     width: drawerWidth,
@@ -45,7 +45,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
     overflowX: "hidden",
     width: `calc(${theme.spacing(7)} + 1px)`,
     [theme.breakpoints.up("sm")]: {
-        width: `calc(${theme.spacing(8)} + 1px)`,
+        width: `calc(${theme.spacing(9)} + 1px)`,
     },
 });
 
@@ -224,7 +224,7 @@ export default function MiniDrawer() {
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader />
                 <Divider />
-                <List sx={{ padding: 0.5, pt: 1, pb: 1 }}>
+                <List sx={{ padding: 1, pt: 1, pb: 1 }}>
                     {items.map((item) => (
                         <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
                             <Tooltip
@@ -237,7 +237,7 @@ export default function MiniDrawer() {
                                     to={item.to}
                                     selected={item.selected}
                                     sx={{
-                                        minHeight: 56,
+                                        minHeight: 52,
                                         justifyContent: open ? "initial" : "center",
                                         borderRadius: 2,
                                     }}
@@ -256,7 +256,7 @@ export default function MiniDrawer() {
                                         primary={item.text}
                                         sx={{
                                             position: "absolute",
-                                            left: 65,
+                                            left: 70,
                                             color: item.selected ? theme.palette.primary.main : "",
                                         }}
                                     />
