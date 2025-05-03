@@ -25,6 +25,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import Settings from "@mui/icons-material/Settings";
 import PersonIcon from '@mui/icons-material/Person';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const drawerWidth = 319;
 
@@ -90,13 +91,13 @@ const Drawer = styled(MuiDrawer, {
 
 export default function MiniDrawer() {
     const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const [open, setOpen] = React.useState(false);
     const location = useLocation();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
-    const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
+
+    const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);
 
     const handleDrawerOpen = () => setOpen(true);
@@ -117,9 +118,57 @@ export default function MiniDrawer() {
         },
     ];
 
+    const drawerContent = (
+        <>
+            <DrawerHeader />
+            <Divider />
+            <List sx={{ padding: 1, pt: 1, pb: 1 }}>
+                {items.map((item) => (
+                    <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
+                        <Tooltip
+                            title={!open && !isMobile ? item.text : ""}
+                            placement="right"
+                            arrow
+                        >
+                            <ListItemButton
+                                component={Link}
+                                to={item.to}
+                                selected={item.selected}
+                                onClick={isMobile ? handleDrawerClose : undefined}
+                                sx={{
+                                    minHeight: 52,
+                                    justifyContent: open && !isMobile ? "initial" : "center",
+                                    borderRadius: 2,
+                                }}
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: "auto",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    {item.icon}
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={item.text}
+                                    sx={{
+                                        position: "absolute",
+                                        left: 70,
+                                        display: open && !isMobile ? "block" : "",
+                                    }}
+                                />
+                            </ListItemButton>
+                        </Tooltip>
+                    </ListItem>
+                ))}
+            </List>
+        </>
+    );
+
     return (
         <Box sx={{ display: "flex" }}>
-            <AppBar position="fixed" open={open}>
+            <AppBar position="fixed" open={open && !isMobile}>
                 <Toolbar>
                     {!open ? (
                         <Tooltip title="Abrir menú">
@@ -221,51 +270,26 @@ export default function MiniDrawer() {
                     </Box>
                 </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader />
-                <Divider />
-                <List sx={{ padding: 1, pt: 1, pb: 1 }}>
-                    {items.map((item) => (
-                        <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
-                            <Tooltip
-                                title={!open ? item.text : ""}
-                                placement="right"
-                                arrow
-                            >
-                                <ListItemButton
-                                    component={Link}
-                                    to={item.to}
-                                    selected={item.selected}
-                                    sx={{
-                                        minHeight: 52,
-                                        justifyContent: open ? "initial" : "center",
-                                        borderRadius: 2,
-                                    }}
-                                >
-                                    <ListItemIcon
-                                        sx={{
-                                            minWidth: 0,
-                                            mr: "auto",
-                                            justifyContent: "center",
-                                            color: item.selected ? theme.palette.primary.main : "",
-                                        }}
-                                    >
-                                        {item.icon}
-                                    </ListItemIcon>
-                                    <ListItemText
-                                        primary={item.text}
-                                        sx={{
-                                            position: "absolute",
-                                            left: 70,
-                                            color: item.selected ? theme.palette.primary.main : "",
-                                        }}
-                                    />
-                                </ListItemButton>
-                            </Tooltip>
-                        </ListItem>
-                    ))}
-                </List>
-            </Drawer>
+            {isMobile ? (
+                <MuiDrawer
+                    variant="temporary"
+                    open={open}
+                    onClose={handleDrawerClose}
+                    ModalProps={{
+                        keepMounted: true,
+                    }}
+                    sx={{
+                        display: { xs: 'block', sm: 'none' },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                    }}
+                >
+                    {drawerContent}
+                </MuiDrawer>
+            ) : (
+                <Drawer variant="permanent" open={open}>
+                    {drawerContent}
+                </Drawer>
+            )}
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />
                 <Outlet />
