@@ -122,25 +122,29 @@ export default function MiniDrawer() {
             <AppBar position="fixed" open={open}>
                 <Toolbar>
                     {!open ? (
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={handleDrawerOpen}
-                            edge="start"
-                            sx={{ marginRight: 2 }}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Tooltip title="Abrir menú">
+                            <IconButton
+                                color="inherit"
+                                aria-label="open drawer"
+                                onClick={handleDrawerOpen}
+                                edge="start"
+                                sx={{ marginRight: 2 }}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Tooltip>
                     ) : (
-                        <IconButton
-                            color="inherit"
-                            aria-label="close drawer"
-                            onClick={handleDrawerClose}
-                            edge="start"
-                            sx={{ marginRight: 2 }}
-                        >
-                            {theme.direction === "rtl" ? <MenuOpenIcon /> : <MenuOpenIcon />}
-                        </IconButton>
+                        <Tooltip title="Cerrar menú">
+                            <IconButton
+                                color="inherit"
+                                aria-label="close drawer"
+                                onClick={handleDrawerClose}
+                                edge="start"
+                                sx={{ marginRight: 2 }}
+                            >
+                                <MenuOpenIcon />
+                            </IconButton>
+                        </Tooltip>
                     )}
                     <SpaceDashboardIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
@@ -220,35 +224,44 @@ export default function MiniDrawer() {
             <Drawer variant="permanent" open={open}>
                 <DrawerHeader />
                 <Divider />
-                <List>
+                <List sx={{ padding: 0.5, pt: 1, pb: 1 }}>
                     {items.map((item) => (
                         <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
-                            <ListItemButton
-                                component={Link}
-                                to={item.to}
-                                selected={item.selected}
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? "initial" : "center",
-                                    px: 2.5,
-                                }}
+                            <Tooltip
+                                title={!open ? item.text : ""}
+                                placement="right"
+                                arrow
                             >
-                                <ListItemIcon
+                                <ListItemButton
+                                    component={Link}
+                                    to={item.to}
+                                    selected={item.selected}
                                     sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : "auto",
-                                        justifyContent: "center",
+                                        minHeight: 56,
+                                        justifyContent: open ? "initial" : "center",
+                                        borderRadius: 2,
                                     }}
                                 >
-                                    {item.icon}
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={item.text}
-                                    sx={{
-                                        opacity: open ? 1 : 0,
-                                    }}
-                                />
-                            </ListItemButton>
+                                    <ListItemIcon
+                                        sx={{
+                                            minWidth: 0,
+                                            mr: "auto",
+                                            justifyContent: "center",
+                                            color: item.selected ? theme.palette.primary.main : "",
+                                        }}
+                                    >
+                                        {item.icon}
+                                    </ListItemIcon>
+                                    <ListItemText
+                                        primary={item.text}
+                                        sx={{
+                                            position: "absolute",
+                                            left: 65,
+                                            color: item.selected ? theme.palette.primary.main : "",
+                                        }}
+                                    />
+                                </ListItemButton>
+                            </Tooltip>
                         </ListItem>
                     ))}
                 </List>

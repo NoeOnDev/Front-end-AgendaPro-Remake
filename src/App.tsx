@@ -3,7 +3,6 @@ import MiniDrawer from "./MiniDrawer";
 import NotasPage from "./NotasPage";
 import LibrosPage from "./LibrosPage";
 
-// ...existing code...
 export default function App() {
   return (
     <BrowserRouter>
@@ -22,4 +21,3 @@ export default function App() {
     </BrowserRouter>
   );
 }
-// ...existing code...
