@@ -31,6 +31,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import { useColorScheme } from "@mui/material/styles";
 import PageContainer from "./PageContainer";
+import MuiLink from "@mui/material/Link";
 
 const drawerWidth = 319;
 
@@ -207,10 +208,18 @@ export default function DashboardLayout() {
                             </IconButton>
                         </Tooltip>
                     )}
-                    <SpaceDashboardIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-                        Agenda Pro
-                    </Typography>
+                    <MuiLink
+                        component={Link}
+                        to="/dashboard"
+                        color="inherit"
+                        underline="none"
+                        sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}
+                    >
+                        <SpaceDashboardIcon sx={{ display: 'flex', mr: 1 }} />
+                        <Typography variant="h6" noWrap component="div">
+                            Agenda Pro
+                        </Typography>
+                    </MuiLink>
                     <Tooltip title={`Cambiar tema (${mode === "light" ? "Oscuro" : mode === "dark" ? "Sistema" : "Claro"})`}>
                         <IconButton
                             sx={{ ml: 1 }}
