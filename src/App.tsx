@@ -1,8 +1,9 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme, CssBaseline } from "@mui/material";
-import MiniDrawer from "./MiniDrawer";
-import NotasPage from "./NotasPage";
-import LibrosPage from "./LibrosPage";
+import PanelPage from "./pages/PanelPage";
+import NotasPage from "./pages/NotasPage";
+import LibrosPage from "./pages/LibrosPage";
+import DashboardLayout from "./DashboardLayout";
 
 const theme = createTheme({
   colorSchemes: {
@@ -17,10 +18,10 @@ export default function App() {
       <CssBaseline />
       <BrowserRouter>
         <Routes>
-          <Route path="/dashboard" element={<MiniDrawer />}>
+          <Route path="/dashboard" element={<DashboardLayout />}>
+            <Route index element={<PanelPage />} />
             <Route path="notas" element={<NotasPage />} />
             <Route path="libros" element={<LibrosPage />} />
-            <Route index element={<Navigate to="notas" replace />} />
           </Route>
         </Routes>
       </BrowserRouter>

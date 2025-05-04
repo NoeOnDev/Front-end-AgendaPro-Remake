@@ -26,6 +26,11 @@ import Logout from "@mui/icons-material/Logout";
 import Settings from "@mui/icons-material/Settings";
 import PersonIcon from '@mui/icons-material/Person';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import ContrastIcon from '@mui/icons-material/Contrast';
+import { useColorScheme } from "@mui/material/styles";
+import PageContainer from "./PageContainer";
 
 const drawerWidth = 319;
 
@@ -89,13 +94,14 @@ const Drawer = styled(MuiDrawer, {
     }),
 }));
 
-export default function MiniDrawer() {
+export default function DashboardLayout() {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const [open, setOpen] = React.useState(false);
     const location = useLocation();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const openMenu = Boolean(anchorEl);
+    const { mode, setMode } = useColorScheme();
 
     const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleMenuClose = () => setAnchorEl(null);
@@ -104,6 +110,12 @@ export default function MiniDrawer() {
     const handleDrawerClose = () => setOpen(false);
 
     const items = [
+        {
+            text: "Panel",
+            icon: <SpaceDashboardIcon />,
+            to: "",
+            selected: location.pathname === "/dashboard" || location.pathname === "/dashboard/",
+        },
         {
             text: "Notas",
             icon: <NoteIcon />,
@@ -199,6 +211,21 @@ export default function MiniDrawer() {
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
                         Agenda Pro
                     </Typography>
+                    <Tooltip title={`Cambiar tema (${mode === "light" ? "Oscuro" : mode === "dark" ? "Sistema" : "Claro"})`}>
+                        <IconButton
+                            sx={{ ml: 1 }}
+                            color="inherit"
+                            onClick={() => {
+                                if (mode === "light") setMode("dark");
+                                else if (mode === "dark") setMode("system");
+                                else setMode("light");
+                            }}
+                        >
+                            {mode === "light" && <DarkModeIcon />}
+                            {mode === "dark" && <ContrastIcon />}
+                            {mode === "system" && <LightModeIcon />}
+                        </IconButton>
+                    </Tooltip>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Cuenta">
                             <IconButton onClick={handleMenuClick} sx={{ p: 0, ml: 2 }}>
@@ -290,9 +317,11 @@ export default function MiniDrawer() {
                     {drawerContent}
                 </Drawer>
             )}
-            <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, mt: 2, mb: 2 }}>
                 <DrawerHeader />
-                <Outlet />
+                <PageContainer>
+                    <Outlet />
+                </PageContainer>
             </Box>
         </Box>
     );
