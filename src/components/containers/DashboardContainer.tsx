@@ -1,11 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import DashboardLayout from "../layouts/Dashboard/DashboardLayout";
 import PanelPage from "../../pages/PanelPage";
-import NotasPage from "../../pages/NotasPage";
-import LibrosPage from "../../pages/LibrosPage";
+import CalendarPage from "../../pages/CalendarPage";
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
-import NoteIcon from "@mui/icons-material/Note";
-import BookIcon from "@mui/icons-material/Book";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PersonIcon from '@mui/icons-material/Person';
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
@@ -44,16 +42,10 @@ export default function DashboardContainer() {
             selected: (pathname: string) => pathname === "/dashboard" || pathname === "/dashboard/",
         },
         {
-            text: "Notas",
-            icon: <NoteIcon />,
-            to: "notas",
-            selected: (pathname: string) => pathname.endsWith("/notas"),
-        },
-        {
-            text: "Libros",
-            icon: <BookIcon />,
-            to: "libros",
-            selected: (pathname: string) => pathname.endsWith("/libros"),
+            text: "Calendario",
+            icon: <CalendarMonthIcon />,
+            to: "calendario",
+            selected: (pathname: string) => pathname.includes("/calendario"),
         },
     ];
 
@@ -71,8 +63,7 @@ export default function DashboardContainer() {
                 }
             >
                 <Route index element={<PanelPage />} />
-                <Route path="notas" element={<NotasPage />} />
-                <Route path="libros" element={<LibrosPage />} />
+                <Route path="calendario" element={<CalendarPage />} />
             </Route>
         </Routes>
     );
