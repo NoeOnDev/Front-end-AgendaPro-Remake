@@ -15,16 +15,11 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import NoteIcon from "@mui/icons-material/Note";
-import BookIcon from "@mui/icons-material/Book";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
-import PersonIcon from '@mui/icons-material/Person';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -32,6 +27,34 @@ import ContrastIcon from '@mui/icons-material/Contrast';
 import { useColorScheme } from "@mui/material/styles";
 import PageContainer from "./PageContainer";
 import MuiLink from "@mui/material/Link";
+
+interface MenuItem {
+    text: string;
+    icon: React.ReactNode;
+    to: string;
+    selected?: (pathname: string) => boolean;
+}
+
+interface UserInfo {
+    name: string;
+    email: string;
+    avatar: string;
+    fullName?: string;
+}
+
+interface MenuOption {
+    icon: React.ReactNode;
+    text: string;
+    onClick?: () => void;
+}
+
+interface DashboardLayoutProps {
+    menuItems: MenuItem[];
+    userInfo: UserInfo;
+    appTitle?: string;
+    menuOptions: MenuOption[];
+    basePath?: string;
+}
 
 const drawerWidth = 319;
 
@@ -95,7 +118,13 @@ const Drawer = styled(MuiDrawer, {
     }),
 }));
 
-export default function DashboardLayout() {
+export default function DashboardLayout({
+    menuItems,
+    userInfo,
+    appTitle = "Agenda Pro",
+    menuOptions,
+    basePath = "/dashboard"
+}: DashboardLayoutProps) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
     const [open, setOpen] = React.useState(false);
@@ -110,33 +139,12 @@ export default function DashboardLayout() {
     const handleDrawerOpen = () => setOpen(true);
     const handleDrawerClose = () => setOpen(false);
 
-    const items = [
-        {
-            text: "Panel",
-            icon: <SpaceDashboardIcon />,
-            to: "",
-            selected: location.pathname === "/dashboard" || location.pathname === "/dashboard/",
-        },
-        {
-            text: "Notas",
-            icon: <NoteIcon />,
-            to: "notas",
-            selected: location.pathname.endsWith("/notas"),
-        },
-        {
-            text: "Libros",
-            icon: <BookIcon />,
-            to: "libros",
-            selected: location.pathname.endsWith("/libros"),
-        },
-    ];
-
     const drawerContent = (
         <>
             <DrawerHeader />
             <Divider />
             <List sx={{ padding: 1, pt: 1, pb: 1 }}>
-                {items.map((item) => (
+                {menuItems.map((item) => (
                     <ListItem key={item.text} disablePadding sx={{ display: "block" }}>
                         <Tooltip
                             title={!open && !isMobile ? item.text : ""}
@@ -145,8 +153,8 @@ export default function DashboardLayout() {
                         >
                             <ListItemButton
                                 component={Link}
-                                to={item.to}
-                                selected={item.selected}
+                                to={`${basePath}/${item.to}`}
+                                selected={item.selected ? item.selected(location.pathname) : false}
                                 onClick={isMobile ? handleDrawerClose : undefined}
                                 sx={{
                                     minHeight: 52,
@@ -210,14 +218,14 @@ export default function DashboardLayout() {
                     )}
                     <MuiLink
                         component={Link}
-                        to="/dashboard"
+                        to={basePath}
                         color="inherit"
                         underline="none"
                         sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}
                     >
                         <SpaceDashboardIcon sx={{ display: 'flex', mr: 1 }} />
                         <Typography variant="h6" noWrap component="div">
-                            Agenda Pro
+                            {appTitle}
                         </Typography>
                     </MuiLink>
                     <Tooltip title={`Cambiar tema (${mode === "light" ? "Oscuro" : mode === "dark" ? "Sistema" : "Claro"})`}>
@@ -238,7 +246,7 @@ export default function DashboardLayout() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Cuenta">
                             <IconButton onClick={handleMenuClick} sx={{ p: 0, ml: 2 }}>
-                                <Avatar alt="Noé Alejandro" src="https://avatars.githubusercontent.com/u/105474616?v=4" />
+                                <Avatar alt={userInfo.fullName || userInfo.name} src={userInfo.avatar} />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -280,28 +288,23 @@ export default function DashboardLayout() {
                         >
                             <MenuItem sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 0.5, py: 0.5 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                                    <Avatar alt="Noé Alejandro Rodríguez Moto" src="https://avatars.githubusercontent.com/u/105474616?v=4"
-                                    />
+                                    <Avatar alt={userInfo.fullName || userInfo.name} src={userInfo.avatar} />
                                     <Box>
                                         <Typography variant="subtitle1" sx={{ fontWeight: 600, lineHeight: 1 }}>
-                                            Noé Alejandro
+                                            {userInfo.name}
                                         </Typography>
                                         <Typography variant="body2" sx={{ fontSize: 13 }}>
-                                            noeonlive@gmail.com
+                                            {userInfo.email}
                                         </Typography>
                                     </Box>
                                 </Box>
                             </MenuItem>
                             <Divider />
-                            <MenuItem>
-                                <PersonIcon sx={{ mr: 1 }} fontSize="small" /> Perfil
-                            </MenuItem>
-                            <MenuItem>
-                                <Settings sx={{ mr: 1 }} fontSize="small" /> Configuración
-                            </MenuItem>
-                            <MenuItem>
-                                <Logout sx={{ mr: 1 }} fontSize="small" /> Cerrar sesión
-                            </MenuItem>
+                            {menuOptions.map((option) => (
+                                <MenuItem key={option.text} onClick={option.onClick}>
+                                    {option.icon} {option.text}
+                                </MenuItem>
+                            ))}
                         </Menu>
                     </Box>
                 </Toolbar>
