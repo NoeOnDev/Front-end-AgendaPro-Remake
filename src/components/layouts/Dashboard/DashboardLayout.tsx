@@ -25,7 +25,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import ContrastIcon from '@mui/icons-material/Contrast';
 import { useColorScheme } from "@mui/material/styles";
-import PageContainer from "./PageContainer";
+import PageContainer from "../../ui/PageContainer";
 import MuiLink from "@mui/material/Link";
 
 interface MenuItem {
