@@ -40,7 +40,7 @@ export default function PageContainer({ title, children }: PageContainerProps) {
         <Container maxWidth={false}>
             <Box sx={{ mb: 2 }}>
                 <Breadcrumbs aria-label="breadcrumb">{breadcrumbs}</Breadcrumbs>
-                <Typography variant="h4" sx={{ mb: 2 }}>
+                <Typography variant="h4">
                     {pageTitle}
                 </Typography>
             </Box>

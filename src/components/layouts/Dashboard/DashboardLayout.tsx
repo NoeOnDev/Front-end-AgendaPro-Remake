@@ -329,7 +329,7 @@ export default function DashboardLayout({
                     {drawerContent}
                 </Drawer>
             )}
-            <Box component="main" sx={{ flexGrow: 1, mt: 2, mb: 2 }}>
+            <Box component="main">
                 <DrawerHeader />
                 <PageContainer>
                     <Outlet />
