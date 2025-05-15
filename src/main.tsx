@@ -1,14 +1,40 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App';
+import Layout from './layouts/dashboard';
+import DashboardPage from './pages';
+import EmployeesCrudPage from './pages/employees';
+import SignInPage from './pages/signin';
 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+const router = createBrowserRouter([
+  {
+    Component: App,
+    children: [
+      {
+        path: '/',
+        Component: Layout,
+        children: [
+          {
+            path: '',
+            Component: DashboardPage,
+          },
+          {
+            path: 'employees/:employeeId?/*',
+            Component: EmployeesCrudPage,
+          },
+        ],
+      },
+      {
+        path: '/sign-in',
+        Component: SignInPage,
+      },
+    ],
+  },
+]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </StrictMode>,
-)
+);
