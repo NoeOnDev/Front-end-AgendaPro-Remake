@@ -1,17 +1,65 @@
-import * as React from 'react';
-import LinearProgress from '@mui/material/LinearProgress';
-import { Outlet, useLocation, useParams, matchPath, Navigate } from 'react-router-dom';
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
-import { PageContainer } from '@toolpad/core/PageContainer';
-import { Account } from '@toolpad/core/Account';
-
+import { useMemo } from 'react';
+import { Box, LinearProgress, Button, Stack } from '@mui/material';
+import { Outlet, useLocation, useParams, matchPath, Navigate, useNavigate } from 'react-router-dom';
+import { DashboardLayout, PageContainer, Account, AccountPreview, SignOutButton, AccountPopoverHeader, AccountPopoverFooter } from '@toolpad/core';
+import PersonIcon from '@mui/icons-material/Person';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { useSession } from '../SessionContext';
+
+function CustomPopoverContent() {
+  const { session } = useSession();
+  const navigate = useNavigate();
+
+  return (
+    <Stack spacing={0.5}>
+      <AccountPopoverHeader>
+        <AccountPreview
+          name={session?.user?.name || ''}
+          email={session?.user?.email || ''}
+          avatar={session?.user?.image || ''}
+          variant="expanded"
+        />
+      </AccountPopoverHeader>
+
+      <Stack sx={{ px: 2 }}>
+        <Button
+          startIcon={<PersonIcon />}
+          onClick={() => navigate('/')}
+          sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+        >
+          Perfil
+        </Button>
+
+        <Button
+          startIcon={<SettingsIcon />}
+          onClick={() => navigate('/')}
+          sx={{ justifyContent: 'flex-start', textTransform: 'none' }}
+        >
+          Configuración
+        </Button>
+      </Stack>
+
+      <AccountPopoverFooter>
+        <SignOutButton />
+      </AccountPopoverFooter>
+    </Stack>
+  );
+}
 
 function CustomAccount() {
   return (
     <Account
+      slots={{
+        popoverContent: CustomPopoverContent,
+      }}
       slotProps={{
-        preview: { slotProps: { avatarIconButton: { sx: { border: '0' } } } },
+        preview: {
+          slotProps: { avatarIconButton: { sx: { border: '0' } } },
+        },
+      }}
+      localeText={{
+        accountSignInLabel: 'Iniciar sesión',
+        accountSignOutLabel: 'Cerrar sesión',
       }}
     />
   );
@@ -21,7 +69,7 @@ export default function Layout() {
   const location = useLocation();
   const { employeeId } = useParams();
 
-  const title = React.useMemo(() => {
+  const title = useMemo(() => {
     if (location.pathname === '/employees/new') {
       return 'New Employee';
     }
@@ -38,9 +86,9 @@ export default function Layout() {
 
   if (loading) {
     return (
-      <div style={{ width: '100%' }}>
+      <Box sx={{ width: '100%' }}>
         <LinearProgress />
-      </div>
+      </Box>
     );
   }
 

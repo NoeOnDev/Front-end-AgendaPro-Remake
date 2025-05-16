@@ -14,18 +14,15 @@ export interface AuthResponse {
 }
 
 // URL base de la API
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
+const API_URL = import.meta.env.VITE_API_URL;
 
 /**
  * Iniciar sesión con Google (redirige a tu endpoint de autenticación)
  */
 export const signInWithGoogle = async (): Promise<AuthResponse> => {
   try {
-    // Con Passport, es mejor redirigir directamente al usuario a la ruta de autenticación
     window.location.href = `${API_URL}/auth/google`;
 
-    // Como estamos redirigiendo, no llegamos a este punto hasta que volvamos
-    // Retornamos un valor temporal
     return {
       success: false,
       error: "Redirigiendo a Google para autenticación...",
@@ -64,7 +61,7 @@ export const signInWithCredentials = async (
     return {
       success: true,
       user: data.user,
-      error: null,
+      error: undefined,
     };
   } catch (error: any) {
     return {
