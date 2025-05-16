@@ -13,27 +13,7 @@ export interface AuthResponse {
   error?: string;
 }
 
-// URL base de la API
 const API_URL = import.meta.env.VITE_API_URL;
-
-/**
- * Iniciar sesión con Google (redirige a tu endpoint de autenticación)
- */
-export const signInWithGoogle = async (): Promise<AuthResponse> => {
-  try {
-    window.location.href = `${API_URL}/auth/google`;
-
-    return {
-      success: false,
-      error: "Redirigiendo a Google para autenticación...",
-    };
-  } catch (error: any) {
-    return {
-      success: false,
-      error: error.message || "Error al iniciar sesión con Google",
-    };
-  }
-};
 
 /**
  * Iniciar sesión con credenciales (email/password)

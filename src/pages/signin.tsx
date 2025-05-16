@@ -1,9 +1,10 @@
 'use client';
-import { Typography, LinearProgress, Checkbox, FormControlLabel, useTheme, Link } from '@mui/material';
+import { useState } from 'react';
+import { Typography, LinearProgress, Checkbox, FormControlLabel, useTheme, Link, CircularProgress, Button, Box } from '@mui/material';
 import { SignInPage } from '@toolpad/core/SignInPage';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { useSession, type Session } from '../SessionContext';
-import { signInWithGoogle, signInWithCredentials } from '../api/auth';
+import { signInWithCredentials } from '../api/auth';
 
 function RememberMeCheckbox() {
   const theme = useTheme();
@@ -30,8 +31,8 @@ function RememberMeCheckbox() {
 
 function ForgotPasswordLink() {
   return (
-    <Link href="/" variant="body2">
-      Olvidaste tu contraseña?
+    <Link href="/forgot-password" variant="body2">
+      ¿Olvidaste tu contraseña?
     </Link>
   );
 }
@@ -39,20 +40,31 @@ function ForgotPasswordLink() {
 function SignUpLink() {
   return (
     <Typography variant="body2" color="textSecondary">
-      No tienes cuenta?{' '}
-      <Link href="/" variant="body2">
+      ¿No tienes cuenta?{' '}
+      <Link href="/register" variant="body2">
         Regístrate
       </Link>
     </Typography>
   );
 }
 
+const validateEmail = (email: string): boolean => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+};
+
 export default function SignIn() {
   const { session, setSession, loading } = useSession();
   const navigate = useNavigate();
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   if (loading) {
-    return <LinearProgress />;
+    return (
+      <Box sx={{ width: '100%', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <LinearProgress sx={{ width: '50%', maxWidth: '400px' }} />
+      </Box>
+    );
   }
 
   if (session) {
@@ -63,18 +75,35 @@ export default function SignIn() {
     <SignInPage
       providers={[{ id: 'google', name: 'Google' }, { id: 'credentials', name: 'Credentials' }]}
       signIn={async (provider, formData, callbackUrl) => {
+        setIsAuthenticating(true);
+        setAuthError(null);
         let result;
+
         try {
           if (provider.id === 'google') {
-            result = await signInWithGoogle();
+            const redirectUrl = new URL(`${import.meta.env.VITE_API_URL}/auth/google`);
+            if (callbackUrl) {
+              redirectUrl.searchParams.append('callbackUrl', callbackUrl);
+            }
+            window.location.href = redirectUrl.toString();
+            return {};
           }
 
           if (provider.id === 'credentials') {
             const email = formData?.get('email') as string;
             const password = formData?.get('password') as string;
 
-            if (!email || !password) {
-              return { error: 'Email y contraseña son requeridos' };
+            if (!email) {
+              return { error: 'El correo electrónico es requerido', type: 'EmailRequired' };
+            }
+            if (!validateEmail(email)) {
+              return { error: 'Formato de correo electrónico inválido', type: 'EmailInvalid' };
+            }
+            if (!password) {
+              return { error: 'La contraseña es requerida', type: 'PasswordRequired' };
+            }
+            if (password.length < 6) {
+              return { error: 'La contraseña debe tener al menos 6 caracteres', type: 'PasswordTooShort' };
             }
 
             result = await signInWithCredentials(email, password);
@@ -92,9 +121,25 @@ export default function SignIn() {
             navigate(callbackUrl || '/', { replace: true });
             return {};
           }
-          return { error: result?.error || 'Error al iniciar sesión' };
+
+          if (result?.error) {
+            if (result.error.includes('Credenciales inválidas')) {
+              return { error: 'Credenciales incorrectas', type: 'CredentialsSignin' };
+            }
+          }
+
+          return {
+            error: result?.error || 'Error al iniciar sesión',
+            type: 'UnknownError'
+          };
         } catch (error) {
-          return { error: error instanceof Error ? error.message : 'Ocurrió un error' };
+          console.error('Error de autenticación:', error);
+          return {
+            error: error instanceof Error ? error.message : 'Ocurrió un error inesperado',
+            type: 'ServerError'
+          };
+        } finally {
+          setIsAuthenticating(false);
         }
       }}
       slots={{
@@ -102,7 +147,27 @@ export default function SignIn() {
         forgotPasswordLink: ForgotPasswordLink,
         signUpLink: SignUpLink,
       }}
-
+      slotProps={{
+        emailField: {
+          autoFocus: true,
+          autoComplete: "email",
+          inputProps: { maxLength: 100 }
+        },
+        passwordField: {
+          autoComplete: "current-password",
+          inputProps: { minLength: 6, maxLength: 50 }
+        },
+        form: {
+          noValidate: true
+        },
+        submitButton: {
+          disabled: isAuthenticating,
+          startIcon: isAuthenticating ?
+            <CircularProgress size={16} color="inherit" /> :
+            undefined,
+          children: isAuthenticating ? 'Iniciando sesión...' : undefined
+        }
+      }}
       localeText={{
         signInTitle: (brandingTitle?: string) =>
           brandingTitle ? `Iniciar sesión en ${brandingTitle}` : 'Iniciar sesión',
@@ -113,8 +178,8 @@ export default function SignIn() {
         or: 'o',
         email: 'Correo electrónico',
         password: 'Contraseña',
-
       }}
+
     />
   );
 }

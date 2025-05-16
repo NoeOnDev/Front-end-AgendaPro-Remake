@@ -21,7 +21,7 @@ function CustomPopoverContent() {
         />
       </AccountPopoverHeader>
 
-      <Stack sx={{ px: 2 }}>
+      <Stack sx={{ px: 1 }}>
         <Button
           startIcon={<PersonIcon />}
           onClick={() => navigate('/')}
