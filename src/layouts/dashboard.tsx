@@ -40,7 +40,7 @@ function CustomPopoverContent() {
       </Stack>
 
       <AccountPopoverFooter>
-        <SignOutButton />
+        <SignOutButton fullWidth />
       </AccountPopoverFooter>
     </Stack>
   );
@@ -99,7 +99,7 @@ export default function Layout() {
 
   return (
     <DashboardLayout title={title} slots={{ toolbarAccount: CustomAccount }}>
-      <PageContainer maxWidth="xl">
+      <PageContainer maxWidth={false}>
         <Outlet />
       </PageContainer>
     </DashboardLayout>

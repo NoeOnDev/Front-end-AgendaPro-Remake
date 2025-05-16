@@ -74,7 +74,9 @@ export const signInWithCredentials = async (
 /**
  * Cerrar sesión
  */
-export const signOut = async (): Promise<AuthResponse> => {
+export const signOut = async (
+  setSession?: (session: null) => void
+): Promise<AuthResponse> => {
   try {
     const response = await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
@@ -84,6 +86,10 @@ export const signOut = async (): Promise<AuthResponse> => {
     if (!response.ok) {
       const data = await response.json();
       throw new Error(data.message || "Error al cerrar sesión");
+    }
+
+    if (setSession) {
+      setSession(null);
     }
 
     return {

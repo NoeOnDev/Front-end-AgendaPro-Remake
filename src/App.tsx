@@ -28,11 +28,6 @@ const BRANDING = {
   title: "Agenda Pro",
 };
 
-const AUTHENTICATION: Authentication = {
-  signIn: () => { },
-  signOut: signOut,
-};
-
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -68,6 +63,11 @@ export default function App() {
 
     verifyAuth();
   }, []);
+
+  const AUTHENTICATION: Authentication = useMemo(() => ({
+    signIn: () => { },
+    signOut: () => signOut(setSession),
+  }), [setSession]);
 
   return (
     <ReactRouterAppProvider
