@@ -1,0 +1,327 @@
+/* ============================================================================ */
+/* MODAL - Para creación y edición de proyectos */
+/* ============================================================================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: var(--space-md);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  background: var(--bg-modal);
+  color: var(--text-on-card);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container.modal-sm {
+  max-width: 500px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg) var(--space-xl);
+  border-bottom: 1px solid var(--gray-200);
+  border-bottom-color: var(--border-light);
+}
+
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--gray-500);
+  cursor: pointer;
+  padding: var(--space-xs);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-card-secondary);
+}
+
+.modal-form {
+  padding: var(--space-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Estilos específicos para el formulario de creación de proyectos */
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-error {
+  color: var(--error-600);
+  font-size: 0.75rem;
+  margin-top: var(--space-xs);
+}
+
+.business-type-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.business-type-search {
+  position: relative;
+  margin-bottom: var(--space-md);
+}
+
+.search-input-container {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-500);
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  transition: all var(--transition-fast);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+.business-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-md);
+  max-height: 350px;
+  overflow-y: auto;
+  padding: var(--space-xs);
+  border: 1px solid var(--gray-200);
+  border-color: var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-secondary);
+}
+
+.business-type-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  color: var(--text-on-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+}
+
+.business-type-card:hover {
+  border-color: var(--primary-300);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.business-type-card.selected {
+  border-color: var(--primary-500);
+  background-color: var(--primary-50);
+}
+
+.business-type-icon {
+  width: 3rem;
+  height: 3rem;
+  background: var(--gray-100);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.business-type-selected {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background: var(--primary-500);
+  color: white;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+}
+
+.business-type-name {
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.business-type-description {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  margin: 0;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.business-types-loading,
+.business-types-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  color: var(--gray-600);
+  font-size: 0.875rem;
+  background: var(--bg-card-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  gap: var(--space-sm);
+  height: 200px;
+}
+
+.confirm-message {
+  color: var(--gray-700);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-container {
+    width: calc(100% - 2rem);
+    max-height: 80vh;
+  }
+
+  .business-types-grid {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-title {
+    font-size: 1.125rem;
+  }
+  
+  .form-group {
+    margin-bottom: var(--space-md);
+  }
+  
+  .modal-overlay {
+    padding: var(--space-sm);
+  }
+  
+  .modal-form {
+    padding: var(--space-md);
+    gap: var(--space-md);
+  }
+  
+  .business-types-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .business-type-card {
+    flex-direction: row;
+    text-align: left;
+    padding: var(--space-sm);
+    align-items: center;
+  }
+  
+  .business-type-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+  
+  .business-type-name,
+  .business-type-description {
+    width: 100%;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .modal-actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-header {
+    padding: var(--space-md) var(--space-md);
+  }
+  
+  .modal-container {
+    max-height: 85vh;
+    border-radius: var(--radius-lg);
+  }
+  
+  .form-label {
+    margin-bottom: var(--space-xs);
+  }
+  
+  .search-input {
+    padding: 0.5rem 1rem 0.5rem 2rem;
+  }
+  
+  .business-types-loading,
+  .business-types-empty {
+    height: 150px;
+  }
+}
