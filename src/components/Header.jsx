@@ -68,6 +68,8 @@ function Header({ user }) {
   };
 
   const getInitials = (name) => {
+    if (!name) return "";
+
     return name
       .split(" ")
       .map((word) => word.charAt(0))
@@ -87,6 +89,8 @@ function Header({ user }) {
       "#10b981",
       "#f59e0b",
     ];
+
+    if (!name) return colors[0];
 
     let hash = 0;
     for (let i = 0; i < name.length; i++) {
