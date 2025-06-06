@@ -1,0 +1,9 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: var(--font-size-lg);
+    color: var(--primary);
+    padding: var(--spacing-8);
+}

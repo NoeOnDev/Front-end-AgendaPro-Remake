@@ -1,0 +1,111 @@
+.analyticsContainer {
+    padding: var(--spacing-5);
+}
+
+.analyticsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-5);
+}
+
+.timeFilter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.timeFilter select {
+    padding: var(--spacing-2);
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+}
+
+.chartsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: var(--spacing-5);
+    margin-bottom: var(--spacing-8);
+}
+
+.chartCard {
+    padding: var(--spacing-5);
+    border-radius: var(--border-radius-lg);
+    background-color: var(--bg-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.chartPlaceholder {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.mockChart {
+    display: flex;
+    align-items: flex-end;
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+}
+
+.mockBar {
+    width: 30px;
+    background: var(--primary);
+    margin: 0 var(--spacing-2);
+}
+
+.mockLineChart {
+    width: 100%;
+    position: relative;
+    margin: var(--spacing-12) 0;
+}
+
+.lineBase {
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    position: relative;
+}
+
+.linePoint {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary);
+    top: -4px;
+}
+
+.statsSummary {
+    margin-top: var(--spacing-8);
+}
+
+.statsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-5);
+    margin-top: var(--spacing-4);
+}
+
+.statBox {
+    padding: var(--spacing-4);
+    border-radius: var(--border-radius-lg);
+    background-color: var(--bg-light);
+    box-shadow: var(--shadow-sm);
+}
+
+.statBox h4 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-2);
+    color: var(--text-secondary);
+}
+
+.statBox p {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    color: var(--primary);
+}

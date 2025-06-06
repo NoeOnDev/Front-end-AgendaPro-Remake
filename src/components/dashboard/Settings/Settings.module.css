@@ -1,0 +1,68 @@
+.settingsContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-5);
+}
+
+.settingsSection {
+    margin-bottom: var(--spacing-8);
+    background-color: var(--bg-light);
+    padding: var(--spacing-5);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.formGroup {
+    margin-bottom: var(--spacing-4);
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: var(--spacing-1);
+    color: var(--text-secondary);
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: var(--spacing-2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox input {
+    width: auto;
+    margin-right: var(--spacing-2);
+}
+
+.checkbox label {
+    margin-bottom: 0;
+}
+
+.formActions {
+    display: flex;
+    gap: var(--spacing-2);
+    justify-content: flex-end;
+}
+
+.saveButton {
+    background-color: var(--primary);
+    color: var(--text-light);
+    padding: var(--spacing-2) var(--spacing-4);
+    border: none;
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-medium);
+}
+
+.cancelButton {
+    background-color: var(--bg-medium);
+    color: var(--text-primary);
+    padding: var(--spacing-2) var(--spacing-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+}
