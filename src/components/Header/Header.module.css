@@ -27,6 +27,16 @@
     margin: 0;
 }
 
+.logoLink {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity var(--transition-fast);
+}
+
+.logoLink:hover {
+    opacity: 0.9;
+}
+
 .menuToggle {
     display: flex;
     align-items: center;

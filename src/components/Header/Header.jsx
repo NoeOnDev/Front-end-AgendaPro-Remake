@@ -1,4 +1,5 @@
 import { MdMenu, MdMenuOpen } from "react-icons/md";
+import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import UserMenu from "../UserMenu/UserMenu";
 
@@ -14,7 +15,9 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           >
             {isSidebarOpen ? <MdMenuOpen /> : <MdMenu />}
           </button>
-          <h1 className={styles.logo}>Agenda Pro</h1>
+          <Link to="/" className={styles.logoLink}>
+            <h1 className={styles.logo}>Agenda Pro</h1>
+          </Link>
         </div>
 
         <UserMenu />

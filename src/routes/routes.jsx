@@ -6,22 +6,22 @@ import {
 import { lazy, Suspense } from "react";
 
 // Layouts
-import RootLayout from "./layouts/RootLayout/RootLayout";
+import RootLayout from "../layouts/RootLayout/RootLayout";
 
 // Componentes UI
-import Loading from "./components/ui/Loading/Loading";
-import ErrorBoundary from "./components/ui/ErrorBoundary/ErrorBoundary";
+import Loading from "../components/ui/Loading/Loading";
+import ErrorBoundary from "../components/ui/ErrorBoundary/ErrorBoundary";
 
 // Auth
-import { ProtectedRoute, PublicRoute } from "./hooks/useAuth";
-import Login from "./pages/Auth/Login";
-import Register from "./pages/Auth/Register";
+import { ProtectedRoute, PublicRoute } from "../hooks/useAuth";
+import Login from "../pages/Auth/Login";
+import Register from "../pages/Auth/Register";
 
 // Lazy-loaded components
-const Home = lazy(() => import("./pages/Home/Home"));
-const Dashboard = lazy(() => import("./pages/Dashboard/Dashboard"));
-const Profile = lazy(() => import("./pages/Profile"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+const Home = lazy(() => import("../pages/Home/Home"));
+const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
+const Profile = lazy(() => import("../pages/Profile"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(

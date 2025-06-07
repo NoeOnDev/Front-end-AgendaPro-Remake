@@ -62,9 +62,20 @@
     opacity: 0.7;
 }
 
-.footer {
-    background-color: var(--bg-medium);
-    padding: var(--spacing-5);
-    text-align: center;
-    border-top: 1px solid var(--border-color);
+.mainContainer {
+  display: flex;
+  flex: 1;
+  position: relative;
+}
+
+.main {
+  flex: 1;
+  padding: var(--spacing-5);
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 100%;
+  }
 }

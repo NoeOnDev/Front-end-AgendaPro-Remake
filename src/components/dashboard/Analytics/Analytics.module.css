@@ -1,5 +1,8 @@
 .analyticsContainer {
     padding: var(--spacing-5);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    width: 100%;
 }
 
 .analyticsHeader {
@@ -108,4 +111,49 @@
     font-weight: var(--font-weight-bold);
     margin: 0;
     color: var(--primary);
+}
+
+/* Añadir media queries */
+@media (max-width: var(--breakpoint-lg)) {
+    .chartsContainer {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: var(--breakpoint-md)) {
+    .analyticsHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-4);
+    }
+
+    .timeFilter {
+        width: 100%;
+    }
+
+    .timeFilter select {
+        width: 100%;
+    }
+
+    .chartsContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .statsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .analyticsContainer {
+        padding: var(--spacing-3);
+    }
+
+    .chartCard {
+        padding: var(--spacing-3);
+    }
+
+    .analyticsHeader h2 {
+        font-size: var(--font-size-xl);
+    }
 }

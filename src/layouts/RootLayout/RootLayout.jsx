@@ -1,17 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { Outlet, useNavigation } from "react-router-dom";
 import Header from "../../components/Header/Header";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import styles from "./RootLayout.module.css";
 
 function RootLayout() {
   // Determinar el estado inicial del sidebar basado en el tamaño de pantalla
   const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
-    return window.innerWidth >= 768; // True para desktop, false para móviles
+    return window.innerWidth >= 768;
   });
 
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  const sidebarRef = useRef(null);
   const overlayRef = useRef(null);
   const isMobile = window.innerWidth < 768;
 
@@ -21,9 +21,7 @@ function RootLayout() {
       if (
         isMobile &&
         isSidebarOpen &&
-        sidebarRef.current &&
-        !sidebarRef.current.contains(event.target) &&
-        event.target.closest('[aria-label="Cerrar menú"]') === null
+        event.target === overlayRef.current
       ) {
         setIsSidebarOpen(false);
       }
@@ -68,15 +66,14 @@ function RootLayout() {
             ref={overlayRef}
           />
         )}
-
-        <main className={`${styles.main} ${isLoading ? styles.loading : ""}`}>
-          <Outlet
-            context={{
-              isSidebarOpen,
-              sidebarRef,
-            }}
-          />
-        </main>
+        
+        <div className={styles.mainContainer}>
+          <Sidebar isSidebarOpen={isSidebarOpen} />
+          
+          <main className={`${styles.main} ${isLoading ? styles.loading : ""}`}>
+            <Outlet />
+          </main>
+        </div>
       </div>
     </div>
   );
