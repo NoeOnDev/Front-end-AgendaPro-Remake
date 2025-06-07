@@ -1,5 +1,6 @@
 import { MdMenu, MdMenuOpen } from "react-icons/md";
 import styles from "./Header.module.css";
+import UserMenu from "../UserMenu/UserMenu";
 
 function Header({ toggleSidebar, isSidebarOpen }) {
   return (
@@ -16,11 +17,7 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           <h1 className={styles.logo}>Agenda Pro</h1>
         </div>
 
-        {/* Se ha eliminado la navegación del header según lo solicitado */}
-
-        <div className={styles.userControls}>
-          <button className={styles.userButton}>Usuario</button>
-        </div>
+        <UserMenu />
       </div>
     </header>
   );

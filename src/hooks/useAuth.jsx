@@ -1,21 +1,33 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-// Este hook simula autenticación - reemplazar con tu lógica real
-const useAuth = () => {
-  // Retorna true si el usuario está autenticado
-  return { isAuthenticated: false };
-};
-
-function ProtectedRoute() {
-  const { isAuthenticated } = useAuth();
+export function ProtectedRoute() {
+  const { isAuthenticated, loading } = useAuth();
   const location = useLocation();
 
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
   if (!isAuthenticated) {
-    // Redirecciona a login y preserva la ubicación a la que el usuario intentaba acceder
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return <Outlet />;
 }
 
-export default ProtectedRoute;
+export function PublicRoute() {
+  const { isAuthenticated, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (isAuthenticated) {
+    const destination = location.state?.from?.pathname || "/dashboard";
+    return <Navigate to={destination} replace />;
+  }
+
+  return <Outlet />;
+}

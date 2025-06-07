@@ -66,28 +66,22 @@
     font-weight: var(--font-weight-semibold);
 }
 
-.userControls {
-    display: flex;
-    align-items: center;
-}
-
-.userButton {
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-1) var(--spacing-3);
-    cursor: pointer;
-    color: var(--text-primary);
-    font-weight: var(--font-weight-medium);
-}
-
-.userButton:hover {
-    background-color: var(--bg-medium);
-}
-
-/* Responsive styles */
 @media (max-width: 768px) {
     .nav {
         display: none;
+    }
+
+    .headerContent {
+        padding: 0 var(--spacing-3);
+    }
+
+    .logo {
+        font-size: var(--font-size-xl);
+    }
+}
+
+@media (max-width: 480px) {
+    .menuToggle {
+        font-size: var(--font-size-2xl);
     }
 }

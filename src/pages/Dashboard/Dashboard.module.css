@@ -6,7 +6,7 @@
 .dashboardSidebar {
     width: 335px;
     background-color: var(--bg-medium);
-    padding: var(--spacing-4) var(--spacing-3);
+    padding: var(--spacing-4) var(--spacing-2);
     border-right: 1px solid var(--border-color);
     transition: width var(--transition-normal) ease, padding var(--transition-normal) ease;
 }
