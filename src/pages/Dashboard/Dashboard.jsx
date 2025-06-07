@@ -55,7 +55,10 @@ function NavGroup({ title, icon, children, defaultExpanded = false }) {
 }
 
 function Dashboard() {
-  const { isSidebarOpen } = useOutletContext() || { isSidebarOpen: true };
+  const { isSidebarOpen, sidebarRef } = useOutletContext() || {
+    isSidebarOpen: true,
+    sidebarRef: null,
+  };
   const location = useLocation();
 
   const isActive = (path) => {
@@ -68,6 +71,7 @@ function Dashboard() {
   return (
     <div className={styles.dashboardContainer}>
       <aside
+        ref={sidebarRef}
         className={`${styles.dashboardSidebar} ${
           !isSidebarOpen ? styles.collapsed : ""
         }`}

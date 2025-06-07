@@ -160,6 +160,16 @@
         top: 80px;
         bottom: 0;
         z-index: 90;
-        box-shadow: var(--shadow-md);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(0);
+        transition: transform var(--transition-normal) ease,
+            width var(--transition-normal) ease,
+            padding var(--transition-normal) ease;
+    }
+
+    .dashboardSidebar.collapsed {
+        transform: translateX(-100%);
+        width: 335px;
+        padding: var(--spacing-4) var(--spacing-2);
     }
 }

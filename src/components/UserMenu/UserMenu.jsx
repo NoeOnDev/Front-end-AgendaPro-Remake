@@ -1,5 +1,10 @@
 import { useState, useRef, useEffect } from "react";
-import { MdLogout, MdPerson, MdSettings } from "react-icons/md";
+import {
+  MdLogout,
+  MdPerson,
+  MdSettings,
+  MdKeyboardArrowRight,
+} from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./UserMenu.module.css";
 
@@ -43,16 +48,25 @@ function UserMenu() {
     <div className={styles.userControls}>
       <div className={styles.userDropdownContainer} ref={dropdownRef}>
         <div className={styles.userDropdownToggle} onClick={toggleDropdown}>
-          {user.avatar ? (
-            <img
-              src={user.avatar}
-              alt={user.name}
-              className={styles.userAvatar}
-            />
-          ) : (
-            <AvatarFallback name={user.name} />
-          )}
-          <span className={styles.userName}>{user.name}</span>
+          <div className={styles.userInfo}>
+            {user.avatar ? (
+              <img
+                src={user.avatar}
+                alt={user.name}
+                className={styles.userAvatar}
+              />
+            ) : (
+              <AvatarFallback name={user.name} />
+            )}
+            <span className={styles.userName}>{user.name}</span>
+          </div>
+          <span
+            className={`${styles.dropdownArrow} ${
+              isDropdownOpen ? styles.dropdownArrowOpen : ""
+            }`}
+          >
+            <MdKeyboardArrowRight />
+          </span>
         </div>
 
         {isDropdownOpen && (
