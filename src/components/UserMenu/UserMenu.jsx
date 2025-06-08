@@ -7,6 +7,8 @@ import {
 } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import styles from "./UserMenu.module.css";
+import Ripple from "../ui/Ripple/Ripple";
+import MenuItem from "../ui/Menu/MenuItem";
 
 // Componente para mostrar iniciales como avatar fallback
 function AvatarFallback({ name }) {
@@ -24,6 +26,12 @@ function UserMenu() {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  // Ripple para el botón de toggle
+  const { handleRipple, ripples } = Ripple({
+    variant: "dark",
+    duration: 550,
+  });
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -47,7 +55,15 @@ function UserMenu() {
   return (
     <div className={styles.userControls}>
       <div className={styles.userDropdownContainer} ref={dropdownRef}>
-        <div className={styles.userDropdownToggle} onClick={toggleDropdown}>
+        {/* Botón toggle con Ripple */}
+        <div
+          className={styles.userDropdownToggle}
+          onClick={(e) => {
+            handleRipple(e);
+            toggleDropdown();
+          }}
+          style={{ position: "relative", overflow: "hidden" }}
+        >
           <div className={styles.userInfo}>
             {user.avatar ? (
               <img
@@ -67,6 +83,7 @@ function UserMenu() {
           >
             <MdKeyboardArrowRight />
           </span>
+          {ripples}
         </div>
 
         {isDropdownOpen && (
@@ -90,22 +107,14 @@ function UserMenu() {
             </div>
 
             <div className={styles.userDropdownLinks}>
-              <button className={styles.userDropdownLink}>
-                <MdPerson /> Mi perfil
-              </button>
-              <button className={styles.userDropdownLink}>
-                <MdSettings /> Configuración
-              </button>
+              <MenuItem icon={<MdPerson />}>Mi perfil</MenuItem>
+              <MenuItem icon={<MdSettings />}>Configuración</MenuItem>
             </div>
 
             <div className={styles.userDropdownFooter}>
-              <button
-                className={styles.logoutButton}
-                onClick={logout}
-                aria-label="Cerrar sesión"
-              >
-                <MdLogout /> Cerrar sesión
-              </button>
+              <MenuItem icon={<MdLogout />} onClick={logout} variant="error">
+                Cerrar sesión
+              </MenuItem>
             </div>
           </div>
         )}

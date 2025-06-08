@@ -56,6 +56,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .main.loading {
@@ -63,19 +64,13 @@
 }
 
 .mainContainer {
-  display: flex;
-  flex: 1;
-  position: relative;
-}
-
-.main {
-  flex: 1;
-  padding: var(--spacing-5);
-  overflow: auto;
+    display: flex;
+    flex: 1;
+    position: relative;
 }
 
 @media (max-width: 768px) {
-  .main {
-    width: 100%;
-  }
+    .main {
+        width: 100%;
+    }
 }

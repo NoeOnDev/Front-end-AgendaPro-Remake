@@ -16,10 +16,19 @@
   padding: var(--spacing-2);
   border-radius: var(--border-radius-md);
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .userDropdownToggle:hover {
   background-color: var(--bg-medium);
+}
+
+.userDropdownToggle .ripple {
+  opacity: 0.4;
 }
 
 .userInfo {
@@ -89,11 +98,8 @@
   color: var(--text-primary);
   max-width: 210px;
   white-space: nowrap;
-  /* Evita el salto de línea */
   overflow: hidden;
-  /* Oculta el exceso de texto */
   text-overflow: ellipsis;
-  /* Muestra puntos suspensivos */
 }
 
 .userDropdownEmail {
@@ -106,47 +112,8 @@
   border-bottom: 1px solid var(--border-color);
 }
 
-.userDropdownLink {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  width: 100%;
-  text-align: left;
-  padding: var(--spacing-2) var(--spacing-3);
-  border: none;
-  background: none;
-  color: var(--text-secondary);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-sm);
-}
-
-.userDropdownLink:hover {
-  background-color: var(--bg-medium);
-  color: var(--primary);
-}
-
 .userDropdownFooter {
   padding: var(--spacing-2);
-}
-
-.logoutButton {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  width: 100%;
-  text-align: left;
-  padding: var(--spacing-2) var(--spacing-3);
-  border: none;
-  background: none;
-  color: var(--error);
-  /* Color diferente para destacarlo */
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-sm);
-}
-
-.logoutButton:hover {
-  background-color: var(--error-light);
-  color: var(--error);
 }
 
 /* Avatar fallback */

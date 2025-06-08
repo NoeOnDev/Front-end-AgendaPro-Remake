@@ -1,7 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
-  MdKeyboardArrowRight,
   MdDashboard,
   MdInsights,
   MdSettings,
@@ -13,31 +11,10 @@ import {
 } from "react-icons/md";
 import styles from "./Sidebar.module.css";
 
-function NavGroup({ title, icon, children, defaultExpanded = false }) {
-  const [expanded, setExpanded] = useState(defaultExpanded);
-
-  return (
-    <div className={styles.navGroup}>
-      <button
-        className={styles.navGroupToggle}
-        onClick={() => setExpanded(!expanded)}
-      >
-        <div className={styles.navGroupTitle}>
-          <span className={styles.navGroupIcon}>{icon}</span>
-          <span>{title}</span>
-        </div>
-        <span className={expanded ? styles.iconExpanded : styles.icon}>
-          <MdKeyboardArrowRight />
-        </span>
-      </button>
-      <div
-        className={`${styles.navGroupItems} ${expanded ? styles.expanded : ""}`}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
+// Importar los componentes de navegación reutilizables
+import NavItem from "../ui/Navigation/NavItem";
+import NavGroupItem from "../ui/Navigation/NavGroupItem";
+import NavGroup from "../ui/Navigation/NavGroup";
 
 function Sidebar({ isSidebarOpen }) {
   const location = useLocation();
@@ -56,19 +33,11 @@ function Sidebar({ isSidebarOpen }) {
     <aside
       className={`${styles.sidebar} ${!isSidebarOpen ? styles.collapsed : ""}`}
     >
-      <nav>
+      <nav className={styles.sidebarNav}>
         {/* Opción Home independiente */}
-        <Link
-          to="/"
-          className={`${styles.navItem} ${
-            isActive("/") ? styles.active : ""
-          }`}
-        >
-          <span className={styles.navIcon}>
-            <MdHome />
-          </span>
-          <span className={styles.navText}>Inicio</span>
-        </Link>
+        <NavItem to="/" icon={<MdHome />} isActive={isActive("/")}>
+          Inicio
+        </NavItem>
 
         {/* Grupo Dashboard */}
         <NavGroup
@@ -76,77 +45,55 @@ function Sidebar({ isSidebarOpen }) {
           icon={<MdSpaceDashboard />}
           defaultExpanded={location.pathname.startsWith("/dashboard")}
         >
-          <Link
+          <NavGroupItem
             to="/dashboard"
-            className={`${styles.navGroupItem} ${
-              isActive("/dashboard") ? styles.active : ""
-            }`}
+            icon={<MdDashboard />}
+            isActive={isActive("/dashboard")}
           >
-            <span className={styles.navIcon}>
-              <MdDashboard />
-            </span>
-            <span className={styles.navText}>Resumen</span>
-          </Link>
-          <Link
+            Resumen
+          </NavGroupItem>
+
+          <NavGroupItem
             to="/dashboard/analytics"
-            className={`${styles.navGroupItem} ${
-              isActive("/dashboard/analytics") ? styles.active : ""
-            }`}
+            icon={<MdInsights />}
+            isActive={isActive("/dashboard/analytics")}
           >
-            <span className={styles.navIcon}>
-              <MdInsights />
-            </span>
-            <span className={styles.navText}>Analítica</span>
-          </Link>
-          <Link
+            Analítica
+          </NavGroupItem>
+
+          <NavGroupItem
             to="/dashboard/settings"
-            className={`${styles.navGroupItem} ${
-              isActive("/dashboard/settings") ? styles.active : ""
-            }`}
+            icon={<MdSettings />}
+            isActive={isActive("/dashboard/settings")}
           >
-            <span className={styles.navIcon}>
-              <MdSettings />
-            </span>
-            <span className={styles.navText}>Configuración</span>
-          </Link>
+            Configuración
+          </NavGroupItem>
         </NavGroup>
 
         {/* Otras secciones principales */}
-        <Link
+        <NavItem
           to="/agenda"
-          className={`${styles.navItem} ${
-            isActive("/agenda") ? styles.active : ""
-          }`}
+          icon={<MdCalendarToday />}
+          isActive={isActive("/agenda")}
         >
-          <span className={styles.navIcon}>
-            <MdCalendarToday />
-          </span>
-          <span className={styles.navText}>Agenda</span>
-        </Link>
-        
-        <Link
+          Agenda
+        </NavItem>
+
+        <NavItem
           to="/clientes"
-          className={`${styles.navItem} ${
-            isActive("/clientes") ? styles.active : ""
-          }`}
+          icon={<MdPeopleAlt />}
+          isActive={isActive("/clientes")}
         >
-          <span className={styles.navIcon}>
-            <MdPeopleAlt />
-          </span>
-          <span className={styles.navText}>Clientes</span>
-        </Link>
-        
-        <Link
+          Clientes
+        </NavItem>
+
+        <NavItem
           to="/perfil"
-          className={`${styles.navItem} ${
-            isActive("/perfil") ? styles.active : ""
-          }`}
+          icon={<MdPerson />}
+          isActive={isActive("/perfil")}
         >
-          <span className={styles.navIcon}>
-            <MdPerson />
-          </span>
-          <span className={styles.navText}>Mi Perfil</span>
-        </Link>
+          Mi Perfil
+        </NavItem>
       </nav>
     </aside>
   );

@@ -6,7 +6,6 @@
 
 .dashboardContent {
     flex: 1;
-    padding: var(--spacing-5) 0;
     overflow: auto;
 }
 
