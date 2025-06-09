@@ -177,3 +177,67 @@ button {
   font-family: var(--font-family);
   font-size: var(--font-size-base);
 }
+
+/* Variables de tema - Modo oscuro */
+[data-theme="dark"] {
+  /* Colores principales */
+  --primary: #8c93ff;
+  --primary-dark: #646cff;
+  --primary-light: #a4a9ff;
+  --primary-bg: #1a1a2e;
+
+  /* Colores secundarios */
+  --secondary: #e0e0e0;
+  --secondary-dark: #cccccc;
+  --secondary-light: #f0f0f0;
+
+  /* Colores de estado */
+  --success: #4ade80;
+  --success-light: #1f2922;
+  --warning: #facc15;
+  --warning-light: #2b2511;
+  --error: #f87171;
+  --error-light: #2d1a1a;
+  --info: #38bdf8;
+  --info-light: #172230;
+
+  /* Colores de fondo */
+  --bg-light: #1e1e1e;
+  --bg-medium: #2d2d2d;
+  --bg-dark: #252525;
+
+  /* Colores de texto */
+  --text-primary: #e0e0e0;
+  --text-secondary: #cccccc;
+  --text-tertiary: #a0a0a0;
+  --text-light: #ffffff;
+  --text-muted: #6c7281;
+
+  /* Colores de borde */
+  --border-color: #444444;
+  --border-color-dark: #555555;
+
+  /* Sombras - Ajustadas para el modo oscuro */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+  /* Ripple - Ajustados para el modo oscuro */
+  --ripple-primary: rgba(140, 147, 255, 0.3);
+  --ripple-secondary: rgba(224, 224, 224, 0.1);
+  --ripple-light: rgba(255, 255, 255, 0.15);
+  --ripple-dark: rgba(255, 255, 255, 0.05);
+  --ripple-success: rgba(74, 222, 128, 0.3);
+  --ripple-error: rgba(248, 113, 113, 0.3);
+  --ripple-warning: rgba(250, 204, 21, 0.3);
+  --ripple-info: rgba(56, 189, 248, 0.3);
+}
+
+/* Transición suave al cambiar de tema */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

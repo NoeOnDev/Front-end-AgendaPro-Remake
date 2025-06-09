@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import UserMenu from "../UserMenu/UserMenu";
 import Ripple from "../ui/Ripple/Ripple";
+import ThemeSelector from "../ui/ThemeSelectorItem/ThemeSelectorItem";
 
 function Header({ toggleSidebar, isSidebarOpen }) {
   // Usamos variant en lugar de color directo
   const { handleRipple, ripples } = Ripple({
-    variant: "dark", // Utilizamos la variante primary
-    duration: 600, // Mantenemos la duración más corta para un botón pequeño
+    variant: "dark",
+    duration: 600,
   });
 
   return (
@@ -32,7 +33,10 @@ function Header({ toggleSidebar, isSidebarOpen }) {
           </Link>
         </div>
 
-        <UserMenu />
+        <div className={styles.headerActions}>
+          <ThemeSelector />
+          <UserMenu />
+        </div>
       </div>
     </header>
   );

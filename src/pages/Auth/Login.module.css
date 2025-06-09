@@ -60,13 +60,25 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     font-size: var(--font-size-base);
-    transition: border-color var(--transition-fast);
+    background-color: var(--bg-light);
+    /* Usar variable de color de fondo */
+    color: var(--text-primary);
+    /* Usar variable de color de texto */
+    transition: all var(--transition-normal);
+    /* Transición para todos los cambios de propiedad */
 }
 
+/* Ajustamos el estilo para focus que también debe adaptarse al tema */
 .formGroup input:focus {
     border-color: var(--primary);
     outline: none;
     box-shadow: 0 0 0 2px var(--primary-bg);
+}
+
+/* Para placeholder, para que también se adapte al tema */
+.formGroup input::placeholder {
+    color: var(--text-tertiary);
+    opacity: 0.8;
 }
 
 .authActions {

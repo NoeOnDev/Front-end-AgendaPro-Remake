@@ -14,6 +14,12 @@
     margin: 0 auto;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
 .logoContainer {
     display: flex;
     align-items: center;
